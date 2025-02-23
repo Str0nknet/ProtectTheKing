@@ -1,14 +1,12 @@
 ; Installer script for Protect The King
 !define APPNAME "Protect The King"
-!define COMPANY "MyGameStudio"
-!define VERSION "1.0"
+!define COMPANY "Str0nknetGames"
+!define VERSION "0.0.1"
 
-; Domyślny katalog instalacyjny (bez dodatkowych parametrów)
-InstallDir "$PROGRAMFILES\${APPNAME}"
-
-Outfile "ProtectTheKing_Installer.exe" ; Nazwa pliku instalatora
-RequestExecutionLevel admin ; Wymagaj uprawnień administratora
-ShowInstDetails show
+Outfile "ProtectTheKing_Installer.exe"  ; Nazwa pliku instalatora
+InstallDir "$PROGRAMFILES\${APPNAME}"   ; Katalog domyślny instalacji
+RequestExecutionLevel admin             ; Wymagaj uprawnień administratora
+ShowInstDetails show                    
 
 Section "Install"
     SetOutPath $INSTDIR
@@ -17,14 +15,14 @@ Section "Install"
     File /r "ProtectTheKing.exe"
     File /r "Assets\*.*"
 
-    ; Skrót na pulpicie
+    ; Tworzenie skrótu na pulpicie
     CreateShortcut "$DESKTOP\Protect The King.lnk" "$INSTDIR\ProtectTheKing.exe"
 
-    ; Skrót w menu start
+    ; Tworzenie skrótu w menu Start
     CreateDirectory "$SMPROGRAMS\${APPNAME}"
     CreateShortcut "$SMPROGRAMS\${APPNAME}\Protect The King.lnk" "$INSTDIR\ProtectTheKing.exe"
 
-    ; Dodanie deinstalatora
+    ; Tworzenie deinstalatora
     WriteUninstaller "$INSTDIR\uninstall.exe"
 SectionEnd
 
@@ -37,4 +35,3 @@ Section "Uninstall"
     RMDir /r "$SMPROGRAMS\${APPNAME}"
     RMDir /r "$INSTDIR"
 SectionEnd
-
