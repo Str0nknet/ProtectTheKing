@@ -14,6 +14,7 @@ Section "Install"
     ; Kopiowanie plików gry
     File /r "ProtectTheKing.exe"
     File /r "Assets\*.*"
+    File "raylib.dll"
 
     ; Tworzenie skrótu na pulpicie
     CreateShortcut "$DESKTOP\Protect The King.lnk" "$INSTDIR\ProtectTheKing.exe"
