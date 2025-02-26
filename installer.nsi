@@ -10,7 +10,7 @@ Section "Install"
     SetOutPath $INSTDIR
 
     ; Kopiowanie plików gry
-    File "ProtectTheKing.exe"
+    File "Protect_The_King.exe"
     
     ; Kopiowanie folderu Assets z całą strukturą
     SetOutPath "$INSTDIR\Assets"
