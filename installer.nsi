@@ -14,19 +14,20 @@ Section "Install"
     SetOutPath $INSTDIR
 
     ; Kopiowanie plików gry
-    File "Protect_The_King.exe"
-    
-    ; Kopiowanie folderu Assets z całą strukturą
-    SetOutPath "$INSTDIR\Assets"
-    File /r "Assets\*"
+    File /oname=$INSTDIR\Protect_The_King.exe "Protect_The_King.exe"
 
     ; Kopiowanie raylib.dll
-    SetOutPath $INSTDIR
-    File "raylib.dll"
+    File /oname=$INSTDIR\raylib.dll "raylib.dll"
+
+    ; Kopiowanie folderu Assets z całą strukturą
+    SetOutPath "$INSTDIR\Assets"
+    File /r "Assets\*.*"
+
+    ; Tworzenie katalogu na ikony, jeśli nie istnieje
+    CreateDirectory "$INSTDIR\Assets\Icons"
 
     ; Kopiowanie ikony do katalogu instalacyjnego
-    SetOutPath "$INSTDIR\Assets\Icons"
-    File "Assets\Icons\Icon.ico"
+    File /oname=$INSTDIR\Assets\Icons\Icon.ico "Assets\Icons\Icon.ico"
 
     ; Tworzenie skrótu na pulpicie z ikoną
     CreateShortcut "$DESKTOP\Protect The King.lnk" "$INSTDIR\Protect_The_King.exe" "" "$INSTDIR\Assets\Icons\Icon.ico"
