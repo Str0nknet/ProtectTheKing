@@ -6,45 +6,33 @@ InstallDir "$PROGRAMFILES\${APPNAME}"   ; Katalog domyślny instalacji
 RequestExecutionLevel admin             ; Wymagaj uprawnień administratora
 ShowInstDetails show
 
-; Ustawienie ikony dla instalatora
-Icon "Assets\Icons\Icon.ico"
-UninstallIcon "Assets\Icons\Icon.ico"
-
 Section "Install"
     SetOutPath $INSTDIR
 
     ; Kopiowanie plików gry
-    File /oname=$INSTDIR\Protect_The_King.exe "Protect_The_King.exe"
+    File "Protect_The_King.exe"
+    
+    ; Kopiowanie folderu Assets z całą strukturą
+    SetOutPath "$INSTDIR\Assets"
+    File /r "Assets\*"
 
     ; Kopiowanie raylib.dll
-    File /oname=$INSTDIR\raylib.dll "raylib.dll"
+    SetOutPath $INSTDIR
+    File "raylib.dll"
 
-    ; Upewnienie się, że katalog Assets istnieje
-    CreateDirectory "$INSTDIR\Assets"
+    ; Tworzenie skrótu na pulpicie
+    CreateShortcut "$DESKTOP\Protect The King.lnk" "$INSTDIR\ProtectTheKing.exe"
 
-    ; Kopiowanie całego folderu Assets, w tym ukrytych plików
-    SetOutPath "$INSTDIR\Assets"
-    File /r /x ".gitkeep" "Assets\*.*"
-
-    ; Tworzenie podfolderów w Assets
-    CreateDirectory "$INSTDIR\Assets\Icons"
-    CreateDirectory "$INSTDIR\Assets\Mobs"
-    CreateDirectory "$INSTDIR\Assets\Buttons"
-
-    ; Kopiowanie ikony
-    File /oname=$INSTDIR\Assets\Icons\Icon.ico "Assets\Icons\Icon.ico"
-
-    ; Tworzenie skrótów
-    CreateShortcut "$DESKTOP\Protect The King.lnk" "$INSTDIR\Protect_The_King.exe" "" "$INSTDIR\Assets\Icons\Icon.ico"
+    ; Tworzenie skrótu w menu Start
     CreateDirectory "$SMPROGRAMS\${APPNAME}"
-    CreateShortcut "$SMPROGRAMS\${APPNAME}\Protect The King.lnk" "$INSTDIR\Protect_The_King.exe" "" "$INSTDIR\Assets\Icons\Icon.ico"
+    CreateShortcut "$SMPROGRAMS\${APPNAME}\Protect The King.lnk" "$INSTDIR\ProtectTheKing.exe"
 
     ; Tworzenie deinstalatora
     WriteUninstaller "$INSTDIR\uninstall.exe"
 SectionEnd
 
 Section "Uninstall"
-    Delete "$INSTDIR\Protect_The_King.exe"
+    Delete "$INSTDIR\ProtectTheKing.exe"
     RMDir /r "$INSTDIR\Assets"
     Delete "$INSTDIR\raylib.dll"
     Delete "$INSTDIR\uninstall.exe"
