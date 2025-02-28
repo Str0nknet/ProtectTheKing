@@ -19,20 +19,23 @@ Section "Install"
     ; Kopiowanie raylib.dll
     File /oname=$INSTDIR\raylib.dll "raylib.dll"
 
-    ; Kopiowanie folderu Assets z całą strukturą
+    ; Upewnienie się, że katalog Assets istnieje
+    CreateDirectory "$INSTDIR\Assets"
+
+    ; Kopiowanie całego folderu Assets, w tym ukrytych plików
     SetOutPath "$INSTDIR\Assets"
-    File /r "Assets\*.*"
+    File /r /x ".gitkeep" "Assets\*.*"
 
-    ; Tworzenie katalogu na ikony, jeśli nie istnieje
+    ; Tworzenie podfolderów w Assets
     CreateDirectory "$INSTDIR\Assets\Icons"
+    CreateDirectory "$INSTDIR\Assets\Mobs"
+    CreateDirectory "$INSTDIR\Assets\Buttons"
 
-    ; Kopiowanie ikony do katalogu instalacyjnego
+    ; Kopiowanie ikony
     File /oname=$INSTDIR\Assets\Icons\Icon.ico "Assets\Icons\Icon.ico"
 
-    ; Tworzenie skrótu na pulpicie z ikoną
+    ; Tworzenie skrótów
     CreateShortcut "$DESKTOP\Protect The King.lnk" "$INSTDIR\Protect_The_King.exe" "" "$INSTDIR\Assets\Icons\Icon.ico"
-
-    ; Tworzenie skrótu w menu Start z ikoną
     CreateDirectory "$SMPROGRAMS\${APPNAME}"
     CreateShortcut "$SMPROGRAMS\${APPNAME}\Protect The King.lnk" "$INSTDIR\Protect_The_King.exe" "" "$INSTDIR\Assets\Icons\Icon.ico"
 
