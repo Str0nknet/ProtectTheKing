@@ -6,6 +6,10 @@ InstallDir "$PROGRAMFILES\${APPNAME}"   ; Katalog domyślny instalacji
 RequestExecutionLevel admin             ; Wymagaj uprawnień administratora
 ShowInstDetails show
 
+; Ustawienie ikony dla instalatora
+Icon "Assets\Icons\Icon.ico"
+UninstallIcon "Assets\Icons\Icon.ico"
+
 Section "Install"
     SetOutPath $INSTDIR
 
@@ -19,20 +23,25 @@ Section "Install"
     ; Kopiowanie raylib.dll
     SetOutPath $INSTDIR
     File "raylib.dll"
+    
+     ; Kopiowanie ikony do katalogu instalacyjnego
+    SetOutPath "$INSTDIR\Assets\Icons"
+    File "Assets\Icons\Icon.ico"
 
-    ; Tworzenie skrótu na pulpicie
-    CreateShortcut "$DESKTOP\Protect The King.lnk" "$INSTDIR\ProtectTheKing.exe"
+    ; Tworzenie skrótu w menu Start z ikoną
+    CreateDirectory "$SMPROGRAMS\${APPNAME}"
+    CreateShortcut "$SMPROGRAMS\${APPNAME}\Protect The King.lnk" "$INSTDIR\Protect_The_King.exe" "" "$INSTDIR\Assets\Icons\Icon.ico"
 
     ; Tworzenie skrótu w menu Start
     CreateDirectory "$SMPROGRAMS\${APPNAME}"
-    CreateShortcut "$SMPROGRAMS\${APPNAME}\Protect The King.lnk" "$INSTDIR\ProtectTheKing.exe"
+    CreateShortcut "$SMPROGRAMS\${APPNAME}\Protect The King.lnk" "$INSTDIR\Protect_The_King.exe"
 
     ; Tworzenie deinstalatora
     WriteUninstaller "$INSTDIR\uninstall.exe"
 SectionEnd
 
 Section "Uninstall"
-    Delete "$INSTDIR\ProtectTheKing.exe"
+    Delete "$INSTDIR\Protect_The_King.exe"
     RMDir /r "$INSTDIR\Assets"
     Delete "$INSTDIR\raylib.dll"
     Delete "$INSTDIR\uninstall.exe"
